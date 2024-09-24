@@ -150,7 +150,7 @@ def testrangeandrobinpartitioning(n, openconnection, rangepartitiontableprefix, 
                     ACTUAL_ROWS_IN_INPUT_FILE, count))
 
 
-def testrangerobininsert(expectedtablename, itemid, openconnection, rating, userid):
+def testRangeRobin_Insert(expectedtablename, itemid, openconnection, rating, userid):
     with openconnection.cursor() as cur:
         cur.execute(
             'SELECT COUNT(*) FROM {0} WHERE {4} = {1} AND {5} = {2} AND {6} = {3}'.format(expectedtablename, userid,
@@ -187,7 +187,7 @@ def testEachRoundrobinPartition(ratingstablename, n, openconnection, roundrobinp
 # ##########
 
 
-def testrangepartition(MyAssignment, ratingstablename, n, openconnection, rangepartitiontableprefix, partitionstartindex):
+def testRange_Partition(MyAssignment, ratingstablename, n, openconnection, rangepartitiontableprefix, partitionstartindex):
     """
     Tests the range partition function for Completness, Disjointness and Reconstruction
     :param ratingstablename: Argument for function to be tested
@@ -199,7 +199,7 @@ def testrangepartition(MyAssignment, ratingstablename, n, openconnection, rangep
     """
 
     try:
-        MyAssignment.rangepartition(ratingstablename, n, openconnection)
+        MyAssignment.Range_Partition(ratingstablename, n, openconnection)
         testrangeandrobinpartitioning(n, openconnection, rangepartitiontableprefix, partitionstartindex)
         testEachRangePartition(ratingstablename, n, openconnection, rangepartitiontableprefix)
         return [True, None]
@@ -208,7 +208,7 @@ def testrangepartition(MyAssignment, ratingstablename, n, openconnection, rangep
         return [False, e]
 
 
-def testloadratings(MyAssignment, ratingstablename, filepath, openconnection, rowsininpfile):
+def testLoad_Ratings(MyAssignment, ratingstablename, filepath, openconnection, rowsininpfile):
     """
     Tests the load ratings function
     :param ratingstablename: Argument for function to be tested
@@ -218,7 +218,7 @@ def testloadratings(MyAssignment, ratingstablename, filepath, openconnection, ro
     :return:Raises exception if any test fails
     """
     try:
-        MyAssignment.loadRatings(ratingstablename,filepath,openconnection)
+        MyAssignment.Load_Ratings(ratingstablename,filepath,openconnection)
         # Test 1: Count the number of rows inserted
         with openconnection.cursor() as cur:
             cur.execute('SELECT COUNT(*) from {0}'.format(ratingstablename))
@@ -232,7 +232,7 @@ def testloadratings(MyAssignment, ratingstablename, filepath, openconnection, ro
     return [True, None]
 
 
-def testrangepartition(MyAssignment, ratingstablename, n, openconnection, partitionstartindex, ACTUAL_ROWS_IN_INPUT_FILE):
+def testRange_Partition(MyAssignment, ratingstablename, n, openconnection, partitionstartindex, ACTUAL_ROWS_IN_INPUT_FILE):
     """
     Tests the range partition function for Completness, Disjointness and Reconstruction
     :param ratingstablename: Argument for function to be tested
@@ -243,7 +243,7 @@ def testrangepartition(MyAssignment, ratingstablename, n, openconnection, partit
     """
 
     try:
-        MyAssignment.rangePartition(ratingstablename, n, openconnection)
+        MyAssignment.Range_Partition(ratingstablename, n, openconnection)
         testrangeandrobinpartitioning(n, openconnection, RANGE_TABLE_PREFIX, partitionstartindex, ACTUAL_ROWS_IN_INPUT_FILE)
         testEachRangePartition(ratingstablename, n, openconnection, RANGE_TABLE_PREFIX)
         return [True, None]
@@ -252,7 +252,7 @@ def testrangepartition(MyAssignment, ratingstablename, n, openconnection, partit
         return [False, e]
 
 
-def testroundrobinpartition(MyAssignment, ratingstablename, numberofpartitions, openconnection,
+def testRoundRobin_Partition(MyAssignment, ratingstablename, numberofpartitions, openconnection,
                             partitionstartindex, ACTUAL_ROWS_IN_INPUT_FILE):
     """
     Tests the round robin partitioning for Completness, Disjointness and Reconstruction
@@ -263,7 +263,7 @@ def testroundrobinpartition(MyAssignment, ratingstablename, numberofpartitions, 
     :return:Raises exception if any test fails
     """
     try:
-        MyAssignment.roundRobinPartition(ratingstablename, numberofpartitions, openconnection)
+        MyAssignment.RoundRobin_Partition(ratingstablename, numberofpartitions, openconnection)
         testrangeandrobinpartitioning(numberofpartitions, openconnection, RROBIN_TABLE_PREFIX, partitionstartindex, ACTUAL_ROWS_IN_INPUT_FILE)
         testEachRoundrobinPartition(ratingstablename, numberofpartitions, openconnection, RROBIN_TABLE_PREFIX)
     except Exception as e:
@@ -271,7 +271,7 @@ def testroundrobinpartition(MyAssignment, ratingstablename, numberofpartitions, 
         return [False, e]
     return [True, None]
 
-def testroundrobininsert(MyAssignment, ratingstablename, userid, itemid, rating, openconnection, expectedtableindex):
+def testRoundRobin_Insert(MyAssignment, ratingstablename, userid, itemid, rating, openconnection, expectedtableindex):
     """
     Tests the roundrobin insert function by checking whether the tuple is inserted in he Expected table you provide
     :param ratingstablename: Argument for function to be tested
@@ -284,7 +284,7 @@ def testroundrobininsert(MyAssignment, ratingstablename, userid, itemid, rating,
     """
     try:
         expectedtablename = RROBIN_TABLE_PREFIX + expectedtableindex
-        MyAssignment.roundrobininsert(ratingstablename, userid, itemid, rating, openconnection)
+        MyAssignment.RoundRobin_Insert(ratingstablename, userid, itemid, rating, openconnection)
         if not testrangerobininsert(expectedtablename, itemid, openconnection, rating, userid):
             raise Exception(
                 'Round robin insert failed! Couldnt find ({0}, {1}, {2}) tuple in {3} table'.format(userid, itemid, rating,
@@ -295,7 +295,7 @@ def testroundrobininsert(MyAssignment, ratingstablename, userid, itemid, rating,
     return [True, None]
 
 
-def testrangeinsert(MyAssignment, ratingstablename, userid, itemid, rating, openconnection, expectedtableindex):
+def testRange_Insert(MyAssignment, ratingstablename, userid, itemid, rating, openconnection, expectedtableindex):
     """
     Tests the range insert function by checking whether the tuple is inserted in he Expected table you provide
     :param ratingstablename: Argument for function to be tested
@@ -308,7 +308,7 @@ def testrangeinsert(MyAssignment, ratingstablename, userid, itemid, rating, open
     """
     try:
         expectedtablename = RANGE_TABLE_PREFIX + expectedtableindex
-        MyAssignment.rangeinsert(ratingstablename, userid, itemid, rating, openconnection)
+        MyAssignment.Range_Insert(ratingstablename, userid, itemid, rating, openconnection)
         if not testrangerobininsert(expectedtablename, itemid, openconnection, rating, userid):
             raise Exception(
                 'Range insert failed! Couldnt find ({0}, {1}, {2}) tuple in {3} table'.format(userid, itemid, rating,
