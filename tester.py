@@ -28,28 +28,28 @@ if __name__ == '__main__':
 
             testHelper.deleteAllPublicTables(conn)
 
-            [result, e] = testHelper.testloadratings(MyAssignment, RATINGS_TABLE, INPUT_FILE_PATH, conn, ACTUAL_ROWS_IN_INPUT_FILE)
+            [result, e] = testHelper.testLoad_Ratings(MyAssignment, RATINGS_TABLE, INPUT_FILE_PATH, conn, ACTUAL_ROWS_IN_INPUT_FILE)
             if result :
                 print "loadratings function pass!"
 
-            [result, e] = testHelper.testrangepartition(MyAssignment, RATINGS_TABLE, 5, conn, 0, ACTUAL_ROWS_IN_INPUT_FILE)
+            [result, e] = testHelper.testRange_Partition(MyAssignment, RATINGS_TABLE, 5, conn, 0, ACTUAL_ROWS_IN_INPUT_FILE)
             if result :
                 print "rangepartition function pass!"
 
             # ALERT:: Use only one at a time i.e. uncomment only one line at a time and run the script
-            [result, e] = testHelper.testrangeinsert(MyAssignment, RATINGS_TABLE, 100, 2, 3, conn, '2')
+            [result, e] = testHelper.testRange_Insert(MyAssignment, RATINGS_TABLE, 100, 2, 3, conn, '2')
             # [result, e] = testHelper.testrangeinsert(MyAssignment, RATINGS_TABLE, 100, 2, 0, conn, '0')
             if result:
                 print "rangeinsert function pass!"
 
             testHelper.deleteAllPublicTables(conn)
-            MyAssignment.loadRatings(RATINGS_TABLE, INPUT_FILE_PATH, conn)
+            MyAssignment.Load_Ratings(RATINGS_TABLE, INPUT_FILE_PATH, conn)
 
-            [result, e] = testHelper.testroundrobinpartition(MyAssignment, RATINGS_TABLE, 5, conn, 0, ACTUAL_ROWS_IN_INPUT_FILE)
+            [result, e] = testHelper.testRoundRobin_Partition(MyAssignment, RATINGS_TABLE, 5, conn, 0, ACTUAL_ROWS_IN_INPUT_FILE)
             if result :
                 print "roundrobinpartition function pass!"
 
-            [result, e] = testHelper.testroundrobininsert(MyAssignment, RATINGS_TABLE, 100, 1, 3, conn, '0')
+            [result, e] = testHelper.testRoundRobin_Insert(MyAssignment, RATINGS_TABLE, 100, 1, 3, conn, '0')
             # [result, e] = testHelper.testroundrobininsert(MyAssignment, RATINGS_TABLE, 100, 1, 3, conn, '1')
             # [result, e] = testHelper.testroundrobininsert(MyAssignment, RATINGS_TABLE, 100, 1, 3, conn, '2')
             if result :
