@@ -285,7 +285,7 @@ def testRoundRobin_Insert(MyAssignment, ratingstablename, userid, itemid, rating
     try:
         expectedtablename = RROBIN_TABLE_PREFIX + expectedtableindex
         MyAssignment.RoundRobin_Insert(ratingstablename, userid, itemid, rating, openconnection)
-        if not testrangerobininsert(expectedtablename, itemid, openconnection, rating, userid):
+        if not testRangeRobin_Insert(expectedtablename, itemid, openconnection, rating, userid):
             raise Exception(
                 'Round robin insert failed! Couldnt find ({0}, {1}, {2}) tuple in {3} table'.format(userid, itemid, rating,
                                                                                                     expectedtablename))

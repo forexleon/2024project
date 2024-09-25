@@ -54,7 +54,7 @@ def RoundRobin_Partition(ratingstablename, numberofpartitions, openconnection):
     cur.execute("INSERT INTO robbinsert VALUES({0}, {1})".format(0, numberofpartitions))
     
     for i in range(0, numberofpartitions):
-        cur.execute("CREATE TABLE robin_part{2} AS SELECT* FROM (SELECT*,ROW_NUMBER() OVER() FROM {0}) AS temp WHERE (ROW_NUMBER-1)%{1}={2}".format(ratingstablename, numberofpartitions, i))
+        cur.execute("CREATE TABLE rrobin_part{2} AS SELECT* FROM (SELECT*,ROW_NUMBER() OVER() FROM {0}) AS temp WHERE (ROW_NUMBER-1)%{1}={2}".format(ratingstablename, numberofpartitions, i))
     
     con.commit()
     cur.close()
@@ -66,7 +66,7 @@ def RoundRobin_Insert(ratingstablename, userid, itemid, rating, openconnection):
     cur.execute("SELECT * FROM robbinsert")
     i = cur.fetchone()
     j = i[0]
-    cur.execute("INSERT INTO robin_part{0} VALUES({1},{2},{3})".format(j, userid, itemid, rating))
+    cur.execute("INSERT INTO rrobin_part{0} VALUES({1},{2},{3})".format(j, userid, itemid, rating))
     j = (j + 1) % i[1]
     cur.execute("UPDATE robbinsert SET partition_number={0}".format(j))
     con.commit()
