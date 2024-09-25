@@ -309,7 +309,7 @@ def testRange_Insert(MyAssignment, ratingstablename, userid, itemid, rating, ope
     try:
         expectedtablename = RANGE_TABLE_PREFIX + expectedtableindex
         MyAssignment.Range_Insert(ratingstablename, userid, itemid, rating, openconnection)
-        if not testrangerobininsert(expectedtablename, itemid, openconnection, rating, userid):
+        if not testRangeRobin_Insert(expectedtablename, itemid, openconnection, rating, userid):
             raise Exception(
                 'Range insert failed! Couldnt find ({0}, {1}, {2}) tuple in {3} table'.format(userid, itemid, rating,
                                                                                               expectedtablename))
