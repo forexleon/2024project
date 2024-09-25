@@ -66,7 +66,7 @@ def RoundRobin_Insert(ratingstablename, userid, itemid, rating, openconnection):
     cur.execute("SELECT * FROM robbinsert")
     i = cur.fetchone()
     j = i[0]
-    cur.execute("INSERT INTO rrobin_part{0} VALUES({1},{2},{3})".format(j, userid, itemid, rating))
+    cur.execute("INSERT INTO rrobin_part{0} VALUES({1},{2},{3},{4})".format(j, userid, userid, itemid, rating))
     j = (j + 1) % i[1]
     cur.execute("UPDATE robbinsert SET partition_number={0}".format(j))
     con.commit()
